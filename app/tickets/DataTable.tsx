@@ -22,7 +22,9 @@ const DataTable = ({ tickets }: Props) => {
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>
+                <div className="flex justify-center">Status</div>
+              </TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Created at</TableHead>
             </TableRow>
@@ -33,7 +35,9 @@ const DataTable = ({ tickets }: Props) => {
                   <TableRow key={ticket.id} data-href="/">
                     <TableCell>{ticket.title}</TableCell>
                     <TableCell>
-                      <TicketsStatusBadge status={ticket.status} />
+                      <div className="flex justify-center">
+                        <TicketsStatusBadge status={ticket.status} />
+                      </div>
                     </TableCell>
                     <TableCell>{ticket.priority}</TableCell>
                     <TableCell>

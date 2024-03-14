@@ -1,0 +1,36 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+    - npm run export
+  artifacts:
+    paths:
+      - out
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - apk add --update rsync
+    - rsync -av --delete out/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+  environment:
+    name: production
+    url: https://$CI_PROJECT_NAMESPACE.gitlab.io/$CI_PROJECT_NAME/

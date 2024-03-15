@@ -13,6 +13,7 @@ import TicketPriorityBadge from "@/components/TicketPriorityBadge";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
+import { formatDate } from "@/utils/formatDate";
 
 interface Props {
   ticket: Ticket;
@@ -30,31 +31,13 @@ const TicketDetail = ({ ticket }: Props) => {
 
           <CardTitle>{ticket.title}</CardTitle>
           <CardDescription>
-            Created:{" "}
-            {ticket.createdAt.toLocaleDateString("ru-RU", {
-              year: "2-digit",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: false,
-            })}
+            Created: {formatDate(ticket.createdAt)}
           </CardDescription>
         </CardHeader>
-        <CardContent className="prose">
+        <CardContent className="prose dark:prose-invert">
           <ReactMarkdown>{ticket.description}</ReactMarkdown>
         </CardContent>
-        <CardFooter>
-          Updated:{" "}
-          {ticket.updatedAt.toLocaleDateString("ru-RU", {
-            year: "2-digit",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: false,
-          })}
-        </CardFooter>
+        <CardFooter>Updated: {formatDate(ticket.updatedAt)}</CardFooter>
       </Card>
       <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
         <Link

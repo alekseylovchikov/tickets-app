@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/utils/formatDate";
 import { Ticket } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
@@ -55,16 +56,7 @@ const DataTable = ({ tickets }: Props) => {
                         <TicketPriorityBadge priority={ticket.priority} />
                       </div>
                     </TableCell>
-                    <TableCell>
-                      {ticket.createdAt.toLocaleDateString("ru-RU", {
-                        year: "2-digit",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "numeric",
-                        minute: "2-digit",
-                        hour12: false,
-                      })}
-                    </TableCell>
+                    <TableCell>{formatDate(ticket.createdAt)}</TableCell>
                   </TableRow>
                 ))
               : null}

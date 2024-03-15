@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import {
@@ -29,8 +31,22 @@ const StatusFilter = () => {
         if (status) params.append("status", status);
 
         const query = params.size ? `?${params.toString()}` : "";
+        router.push(`/tickets${query}`);
       }}
-    ></Select>
+    >
+      <SelectTrigger className="w-[200px]">
+        <SelectValue placeholder="Filter by Status" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {statuses.map((status) => (
+            <SelectItem key={status.value || "0"} value={status.value || "0"}>
+              {status.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };
 

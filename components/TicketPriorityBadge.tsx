@@ -26,7 +26,7 @@ const priorityColorMap: Record<Priority, string> = {
 
 const TicketPriorityBadge = ({ priority }: Props) => {
   return (
-    <>
+    <div className="flex justify-between">
       <Star
         className={`${
           priorityMap[priority].level >= 1
@@ -46,7 +46,7 @@ const TicketPriorityBadge = ({ priority }: Props) => {
           priorityMap[priority].level >= 3 ? "text-red-500" : "text-muted"
         }`}
       />
-    </>
+    </div>
   );
 };
 

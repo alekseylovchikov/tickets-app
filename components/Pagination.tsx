@@ -32,8 +32,6 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
 
   useEffect(() => {
     if (currentPage > pageCount) {
-      console.log("changePage");
-
       changePage(pageCount);
     }
   }, [currentPage, pageCount, changePage]);
@@ -74,7 +72,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
       </div>
       <div>
         <p>
-          Page: {currentPage} of {pageCount}
+          Page: {currentPage} of {pageCount} Total: {itemCount}
         </p>
       </div>
     </div>

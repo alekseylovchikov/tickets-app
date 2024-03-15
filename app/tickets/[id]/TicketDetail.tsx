@@ -22,34 +22,39 @@ interface Props {
 
 const TicketDetail = ({ ticket }: Props) => {
   return (
-    <div className="lg:grid lg:grid-cols-4">
-      <Card className="mx-4 mb-4 lg:col-span-3 lg:mr-4">
-        <CardHeader>
-          <div className="flex justify-between mb-3">
-            <TicketStatusBadge status={ticket.status} />
-            <TicketPriorityBadge priority={ticket.priority} />
-          </div>
+    <>
+      <Link href="/tickets" className={buttonVariants({ variant: "link" })}>
+        Back to All Tickets
+      </Link>
+      <div className="lg:grid lg:grid-cols-4">
+        <Card className="mx-4 mb-4 lg:col-span-3 lg:mr-4">
+          <CardHeader>
+            <div className="flex justify-between mb-3">
+              <TicketStatusBadge status={ticket.status} />
+              <TicketPriorityBadge priority={ticket.priority} />
+            </div>
 
-          <CardTitle>{ticket.title}</CardTitle>
-          <CardDescription>
-            Created: {formatDate(ticket.createdAt)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="prose dark:prose-invert">
-          <ReactMarkdown>{ticket.description}</ReactMarkdown>
-        </CardContent>
-        <CardFooter>Updated: {formatDate(ticket.updatedAt)}</CardFooter>
-      </Card>
-      <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
-        <Link
-          href={`/tickets/edit/${ticket.id}`}
-          className={`${buttonVariants({ variant: "default" })}`}
-        >
-          Edit Ticket
-        </Link>
-        <DeleteButton ticketId={ticket.id} />
+            <CardTitle>{ticket.title}</CardTitle>
+            <CardDescription>
+              Created: {formatDate(ticket.createdAt)}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="prose dark:prose-invert">
+            <ReactMarkdown>{ticket.description}</ReactMarkdown>
+          </CardContent>
+          <CardFooter>Updated: {formatDate(ticket.updatedAt)}</CardFooter>
+        </Card>
+        <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
+          <Link
+            href={`/tickets/edit/${ticket.id}`}
+            className={`${buttonVariants({ variant: "default" })}`}
+          >
+            Edit Ticket
+          </Link>
+          <DeleteButton ticketId={ticket.id} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

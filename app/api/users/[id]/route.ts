@@ -25,9 +25,11 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
-  if (body?.password) {
+  if (body?.password && body?.password !== "") {
     const hashedPassword = await bcrypt.hash(body.password, 10);
     body.password = hashedPassword;
+  } else {
+    delete body.password;
   }
 
   if (user.username !== body.username) {

@@ -22,7 +22,7 @@ import { userSchema } from "@/ValidationSchemas/user";
 type UserFormData = z.infer<typeof userSchema>;
 
 interface Props {
-  user?: User;
+  user?: Omit<User, "password">;
 }
 
 const UserForm = ({ user }: Props) => {

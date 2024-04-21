@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import ToFocusButton from "./ToFocusButton";
+import AssignedInfo from "./AssignedInfo";
 
 type TicketWithUser = Prisma.TicketGetPayload<{
   include: {
@@ -40,7 +41,10 @@ const TicketCard = ({ ticket }: Props) => {
           <TicketPriorityBadge priority={ticket.priority} />
         </div>
         {ticket.assignedToUser?.name && (
-          <span>Assigned to: {ticket.assignedToUser?.name}</span>
+          <AssignedInfo
+            focus={ticket.focus}
+            name={ticket.assignedToUser.name}
+          />
         )}
         <ToFocusButton ticket={ticket} />
       </CardContent>

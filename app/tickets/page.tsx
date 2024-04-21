@@ -38,6 +38,9 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
     take: pageSize,
     skip: (page - 1) * pageSize,
     orderBy: [{ [orderBy]: "desc" }],
+    include: {
+      assignedToUser: true,
+    },
   });
 
   return (

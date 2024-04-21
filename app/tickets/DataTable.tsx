@@ -9,14 +9,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDate } from "@/utils/formatDate";
-import { Ticket } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ArrowDown } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { SearchParams } from "./page";
 
+type TicketWithUser = Prisma.TicketGetPayload<{
+  include: {
+    assignedToUser: true;
+  };
+}>;
+
 interface Props {
-  tickets: Ticket[];
+  tickets: TicketWithUser[];
   searchParams: SearchParams;
 }
 
@@ -35,6 +41,7 @@ const DataTable = ({ tickets, searchParams }: Props) => {
                   <ArrowDown className="inline p-1" />
                 )}
               </TableHead>
+              <TableHead>Assigned to</TableHead>
               <TableHead>
                 <div className="flex justify-center">
                   <Link
@@ -72,31 +79,32 @@ const DataTable = ({ tickets, searchParams }: Props) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tickets
-              ? tickets.map((ticket) => (
-                  <TableRow key={ticket.id} data-href="/">
-                    <TableCell>
-                      <Link
-                        href={`/tickets/${ticket.id}`}
-                        className="text-blue-500 hover:underline"
-                      >
-                        {ticket.title}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <TicketStatusBadge status={ticket.status} />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <TicketPriorityBadge priority={ticket.priority} />
-                      </div>
-                    </TableCell>
-                    <TableCell>{formatDate(ticket.createdAt)}</TableCell>
-                  </TableRow>
-                ))
-              : null}
+            {tickets?.map((ticket) => (
+              <TableRow key={ticket.id} data-href="/">
+                <TableCell>
+                  <Link
+                    href={`/tickets/${ticket.id}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    {ticket.title}
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  {ticket.assignedToUser?.name || "Unassigned"}
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-center">
+                    <TicketStatusBadge status={ticket.status} />
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-center">
+                    <TicketPriorityBadge priority={ticket.priority} />
+                  </div>
+                </TableCell>
+                <TableCell>{formatDate(ticket.createdAt)}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

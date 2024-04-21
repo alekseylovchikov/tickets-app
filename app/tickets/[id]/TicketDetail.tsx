@@ -1,5 +1,10 @@
-import { Ticket, User } from "@prisma/client";
-import React from "react";
+"use client";
+
+import AssingTicket from "@/components/AssingTicket";
+import CommentForm from "@/components/CommentForm";
+import TicketPriorityBadge from "@/components/TicketPriorityBadge";
+import TicketStatusBadge from "@/components/TicketStatusBadge";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,21 +13,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import TicketStatusBadge from "@/components/TicketStatusBadge";
-import TicketPriorityBadge from "@/components/TicketPriorityBadge";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import ReactMarkdown from "react-markdown";
 import { formatDate } from "@/utils/formatDate";
+import { Comment, Ticket, User } from "@prisma/client";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import DeleteButton from "./DeleteButton";
-import AssingTicket from "@/components/AssingTicket";
+import DeleteCommentButton from "./DeleteComment";
 
 interface Props {
   ticket: Ticket;
   users: User[];
+  comments: Comment[];
+  canAddComment: boolean;
 }
 
-const TicketDetail = ({ ticket, users }: Props) => {
+const TicketDetail = ({ ticket, users, comments, canAddComment }: Props) => {
   return (
     <>
       <Link href="/tickets" className={buttonVariants({ variant: "link" })}>
@@ -56,6 +61,28 @@ const TicketDetail = ({ ticket, users }: Props) => {
           </Link>
           <DeleteButton ticketId={ticket.id} />
         </div>
+      </div>
+
+      {canAddComment && (
+        <div className="m-4">
+          <CommentForm ticketId={ticket.id} />
+        </div>
+      )}
+
+      <div className="flex flex-col gap-2 m-4">
+        {comments?.map((comment) => (
+          <Card key={comment.id}>
+            <CardHeader>
+              <CardTitle>Comment: {comment.text}</CardTitle>
+            </CardHeader>
+            <CardFooter className="flex items-center justify-between">
+              <div className="flex-1">
+                Created at: {formatDate(comment.createdAt)}
+              </div>
+              {canAddComment && <DeleteCommentButton commentId={comment.id} />}
+            </CardFooter>
+          </Card>
+        ))}
       </div>
     </>
   );

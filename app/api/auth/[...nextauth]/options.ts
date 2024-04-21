@@ -44,11 +44,15 @@ const options: NextAuthOptions = {
       if (account) {
         token.role = user.role;
       }
+      if (user) {
+        token.uid = user.id;
+      }
       return token;
     },
     session({ session, token }) {
       if (session.user) {
         session.user.role = token.role || "USER";
+        session.user.id = token.uid;
       }
       return session;
     },

@@ -1,26 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model Ticket {
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(255)
-  description String @db.Text
-  status Status @default(OPEN)
-  priority Priority @default(MEDIUM)
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    Int?
+  ticketId  Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  ticket    Ticket?  @relation(fields: [ticketId], references: [id])
+}
+
+model Ticket {
+  id               Int       @id @default(autoincrement())
+  title            String    @db.VarChar(255)
+  description      String    @db.Text
+  status           Status    @default(OPEN)
+  priority         Priority  @default(MEDIUM)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
   assignedToUserId Int?
-  assignedToUser User? @relation(fields: [assignedToUserId], references: [id])
+  assignedToUser   User?     @relation(fields: [assignedToUserId], references: [id])
+  comments         Comment[]
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  username        String    @unique
+  password        String
+  role            Role      @default(USER)
+  assignedTickets Ticket[]
+  comments        Comment[]
 }
 
 enum Status {
@@ -33,15 +52,6 @@ enum Priority {
   LOW
   MEDIUM
   HIGH
-}
-
-model User {
-  id Int @id @default(autoincrement())
-  name String
-  username String @unique
-  password String
-  role Role @default(USER)
-  assignedTickets Ticket[]
 }
 
 enum Role {

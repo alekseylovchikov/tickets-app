@@ -144,7 +144,7 @@ const TicketForm = ({ ticket }: Props) => {
             />
           </div>
           <Button disabled={isSubmitting} type="submit">
-            {ticket ? "Update ticket" : "Create ticket"}
+            {ticket ? "UPDATE TICKET" : "CREATE TICKET"}
           </Button>
         </form>
       </Form>

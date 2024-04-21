@@ -50,7 +50,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
           href="/tickets/new"
           className={buttonVariants({ variant: "default" })}
         >
-          New ticket
+          NEW TICKET
         </Link>
         <StatusFilter />
       </div>

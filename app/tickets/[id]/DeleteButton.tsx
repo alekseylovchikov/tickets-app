@@ -42,7 +42,7 @@ const DeleteButton = ({ ticketId }: { ticketId: number }) => {
           className={buttonVariants({ variant: "destructive" })}
           disabled={isDeleting}
         >
-          Delete Ticket
+          DELETE TICKET
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

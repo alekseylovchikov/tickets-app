@@ -67,7 +67,7 @@ const CommentForm = ({ ticketId }: { ticketId: Ticket["id"] }) => {
           />
 
           <Button disabled={isSubmitting} type="submit">
-            Add comment
+            ADD COMMENT
           </Button>
         </form>
       </Form>

@@ -139,7 +139,7 @@ const UserForm = ({ user }: Props) => {
           </div>
 
           <Button disabled={isSubmitting} type="submit">
-            {user ? "Update user" : "Create user"}
+            {user ? "UPDATE USER" : "CREATE USER"}
           </Button>
         </form>
       </Form>

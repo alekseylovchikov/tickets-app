@@ -19,13 +19,14 @@ type TicketWithUser = Prisma.TicketGetPayload<{
 
 interface Props {
   tickets: TicketWithUser[];
+  title: string;
 }
 
-function DashRicentTickets({ tickets }: Props) {
+function DashRicentTickets({ tickets, title }: Props) {
   return (
     <Card className="col-span-3">
       <CardHeader>
-        <CardTitle>Recently Updated</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-8">

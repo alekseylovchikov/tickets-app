@@ -17,6 +17,20 @@ const Dashboard = async () => {
       assignedToUser: true,
     },
   });
+  const closedTickets = await prisma.ticket.findMany({
+    where: {
+      status: "CLOSED",
+      // NOT: [{ status: "CLOSED" }],
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+    skip: 0,
+    take: 5,
+    include: {
+      assignedToUser: true,
+    },
+  });
 
   const groupTickets = await prisma.ticket.groupBy({
     by: ["status"],
@@ -36,7 +50,10 @@ const Dashboard = async () => {
     <div>
       <div className="grid gap-4 md:grid-cols-2 px-2">
         <div>
-          <DashRicentTickets tickets={tickets} />
+          <DashRicentTickets title="Recently Updated" tickets={tickets} />
+        </div>
+        <div>
+          <DashRicentTickets title="Recently Closed" tickets={closedTickets} />
         </div>
         <div>
           <DashChart data={data} />

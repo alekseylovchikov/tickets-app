@@ -46,7 +46,6 @@ const UserForm = ({ user }: Props) => {
       }
 
       setIsSubmitting(false);
-      router.push("/tickets");
       router.refresh();
     } catch (error) {
       setError("Something went wrong. Please try again later.");

@@ -30,6 +30,7 @@ model Ticket {
   assignedToUserId Int?
   assignedToUser   User?     @relation(fields: [assignedToUserId], references: [id])
   comments         Comment[]
+  focus Boolean @default(false)
 }
 
 model User {

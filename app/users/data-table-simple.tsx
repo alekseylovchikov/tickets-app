@@ -15,34 +15,36 @@ interface Props {
 }
 
 const DataTableSimple = ({ users }: Props) => {
-  return <div className="w-full mt-5">
-    <div className="rounded-md sm:border">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-secondary hover:bg-secondary">
-            <TableHead className="font-medium">Name</TableHead>
-            <TableHead className="font-medium">Username</TableHead>
-            <TableHead className="font-medium">Role</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users && users.map(user => (
-            <TableRow key={user.id} data-href="/">
-              <TableCell>
-                <Link href={`/users/${user.id}`}>{user.name}</Link>
-              </TableCell>
-              <TableCell>
-                <Link href={`/users/${user.id}`}>{user.username}</Link>
-              </TableCell>
-              <TableCell>
-                <Link href={`/users/${user.id}`}>{user.role}</Link>
-              </TableCell>
+  return (
+    <div className="w-full mt-5">
+      <div className="rounded-md sm:border">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-secondary hover:bg-secondary">
+              <TableHead className="font-medium">Name</TableHead>
+              <TableHead className="font-medium">Username</TableHead>
+              <TableHead className="font-medium">Role</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {users?.map((user) => (
+              <TableRow key={user.id} data-href="/">
+                <TableCell>
+                  <Link href={`/users/${user.id}`}>{user.name}</Link>
+                </TableCell>
+                <TableCell>
+                  <Link href={`/users/${user.id}`}>{user.username}</Link>
+                </TableCell>
+                <TableCell>
+                  <Link href={`/users/${user.id}`}>{user.role}</Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default DataTableSimple;

@@ -1,11 +1,12 @@
-import React from "react";
-import prisma from "@/prisma/db";
-import DataTable from "./DataTable";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import Pagination from "@/components/Pagination";
 import StatusFilter from "@/components/StatusFilter";
+import TicketPriorityBadge from "@/components/TicketPriorityBadge";
+import TicketStatusBadge from "@/components/TicketStatusBadge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import prisma from "@/prisma/db";
 import { Status, Ticket } from "@prisma/client";
+import Link from "next/link";
 
 export interface SearchParams {
   page: string;
@@ -44,7 +45,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
   });
 
   return (
-    <div>
+    <div className="p-4">
       <div className="flex justify-between gap-2">
         <Link
           href="/tickets/new"
@@ -54,7 +55,33 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
         </Link>
         <StatusFilter />
       </div>
-      <DataTable tickets={tickets} searchParams={searchParams} />
+      {/* <DataTable tickets={tickets} searchParams={searchParams} /> */}
+      <div className="grid gap-2 my-2 md:grid-cols-3 lg:grid-cols-4">
+        {tickets?.map((ticket) => (
+          <Card key={ticket.id}>
+            <CardHeader>
+              <CardTitle>
+                <Link
+                  className="text-blue-500 break-word"
+                  href={`/tickets/${ticket.id}`}
+                >
+                  {ticket.title}
+                </Link>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2 items-start justify-between">
+              <TicketStatusBadge status={ticket.status} />
+              <div className="flex justify-start ">
+                <TicketPriorityBadge priority={ticket.priority} />
+              </div>
+              {ticket.assignedToUser?.name && (
+                <span>Assigned to: {ticket.assignedToUser?.name}</span>
+              )}
+              <Button>FOCUS TO</Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
       <Pagination
         itemCount={ticketsCount}
         pageSize={pageSize}

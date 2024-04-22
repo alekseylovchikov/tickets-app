@@ -2,8 +2,11 @@ import React from "react";
 import prisma from "@/prisma/db";
 import DashRicentTickets from "@/components/DashRicentTickets";
 import DashChart from "@/components/DashChart";
+import { getServerSession } from "next-auth";
+import options from "./api/auth/[...nextauth]/options";
 
 const Dashboard = async () => {
+  const session = await getServerSession(options);
   const tickets = await prisma.ticket.findMany({
     where: {
       NOT: [{ status: "CLOSED" }],
@@ -21,6 +24,20 @@ const Dashboard = async () => {
     where: {
       status: "CLOSED",
       // NOT: [{ status: "CLOSED" }],
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+    skip: 0,
+    take: 5,
+    include: {
+      assignedToUser: true,
+    },
+  });
+
+  const focusedTickets = await prisma.ticket.findMany({
+    where: {
+      focus: true,
     },
     orderBy: {
       updatedAt: "desc",
@@ -54,6 +71,9 @@ const Dashboard = async () => {
         </div>
         <div>
           <DashRicentTickets title="Recently Closed" tickets={closedTickets} />
+        </div>
+        <div>
+          <DashRicentTickets title="Focused" tickets={focusedTickets} />
         </div>
         <div>
           <DashChart data={data} />

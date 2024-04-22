@@ -1,10 +1,11 @@
 import TicketPriorityBadge from "@/components/TicketPriorityBadge";
 import TicketStatusBadge from "@/components/TicketStatusBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import Link from "next/link";
 import ToFocusButton from "./ToFocusButton";
 import AssignedInfo from "./AssignedInfo";
+import { formatDate } from "@/utils/formatDate";
 
 type TicketWithUser = Prisma.TicketGetPayload<{
   include: {
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const TicketCard = ({ ticket }: Props) => {
+  const isClosed = ticket.status === "CLOSED";
+
   return (
     <Card
       key={ticket.id}
@@ -27,7 +30,7 @@ const TicketCard = ({ ticket }: Props) => {
       <CardHeader>
         <CardTitle>
           <Link
-            className="text-blue-500 break-word"
+            className={`text-blue-500 break-word${isClosed ? " text-muted-foreground" : ""}`}
             href={`/tickets/${ticket.id}`}
           >
             {ticket.title}
@@ -37,16 +40,22 @@ const TicketCard = ({ ticket }: Props) => {
 
       <CardContent className="flex flex-col gap-2 items-start justify-between">
         <TicketStatusBadge status={ticket.status} />
+
         <div className="flex justify-start ">
           <TicketPriorityBadge priority={ticket.priority} />
         </div>
+
         {ticket.assignedToUser?.name && (
-          <AssignedInfo
-            focus={ticket.focus}
-            name={ticket.assignedToUser.name}
-          />
+          <AssignedInfo focus={ticket.focus}>
+            <small>Assigned to: {ticket.assignedToUser.name}</small>
+          </AssignedInfo>
         )}
-        <ToFocusButton ticket={ticket} />
+
+        <AssignedInfo focus={ticket.focus}>
+          <small>Created at: {formatDate(ticket.createdAt)}</small>
+        </AssignedInfo>
+
+        {!isClosed && <ToFocusButton ticket={ticket} />}
       </CardContent>
     </Card>
   );

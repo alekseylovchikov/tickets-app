@@ -6,6 +6,7 @@ import React from "react";
 const MainNavLinks = ({ role }: { role?: string }) => {
   const links = [
     { label: "Dashboard", href: "/", adminOnly: false },
+    { label: "My Focus", href: "/focus", adminOnly: false },
     { label: "Tickets", href: "/tickets", adminOnly: false },
     { label: "Users", href: "/users", adminOnly: true },
   ];

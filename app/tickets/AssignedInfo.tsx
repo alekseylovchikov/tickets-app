@@ -1,9 +1,15 @@
 "use client";
 
-import React from "react";
+import { ReactNode } from "react";
 
-const AssignedInfo = ({ focus, name }: { name: string; focus: boolean }) => {
-  return <span className={focus ? "text-white" : ""}>Assigned to: {name}</span>;
+const AssignedInfo = ({
+  focus,
+  children,
+}: {
+  focus: boolean;
+  children: ReactNode;
+}) => {
+  return <span className={focus ? "text-white" : ""}>{children}</span>;
 };
 
 export default AssignedInfo;

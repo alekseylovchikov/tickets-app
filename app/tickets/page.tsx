@@ -5,6 +5,8 @@ import prisma from "@/prisma/db";
 import { Status, Ticket } from "@prisma/client";
 import Link from "next/link";
 import TicketCard from "./TicketCard";
+import { getServerSession } from "next-auth";
+import options from "../api/auth/[...nextauth]/options";
 
 export interface SearchParams {
   page: string;
@@ -13,6 +15,12 @@ export interface SearchParams {
 }
 
 const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return <p className="text-destructive">Unauthorized</p>;
+  }
+
   const pageSize = 10;
   const page = Number(searchParams.page) || 1;
 
@@ -53,11 +61,17 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
         </Link>
         <StatusFilter />
       </div>
+
       <div className="grid gap-2 my-2 md:grid-cols-3 lg:grid-cols-4">
-        {tickets?.map((ticket) => {
-          return <TicketCard key={ticket.id} ticket={ticket} />;
-        })}
+        {tickets?.map((ticket) => (
+          <TicketCard
+            key={ticket.id}
+            ticket={ticket}
+            canEdit={Boolean(session?.user)}
+          />
+        ))}
       </div>
+
       <Pagination
         itemCount={ticketsCount}
         pageSize={pageSize}

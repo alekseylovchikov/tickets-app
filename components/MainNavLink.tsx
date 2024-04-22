@@ -15,20 +15,24 @@ const MainNavLinks = ({ role }: { role?: string }) => {
 
   return (
     <div className="flex items-center gap-2">
-      {links
-        .filter((link) => !link.adminOnly || role === "ADMIN")
-        .map((link) => (
-          <Link
-            href={link.href}
-            className={`navbar-link ${
-              currentPath == link.href &&
-              "cursor-default text-primary/70 hover:text-primary/60"
-            }`}
-            key={link.label}
-          >
-            {link.label}
-          </Link>
-        ))}
+      {role ? (
+        links
+          .filter((link) => !link.adminOnly || role === "ADMIN")
+          .map((link) => (
+            <Link
+              href={link.href}
+              className={`navbar-link ${
+                currentPath == link.href &&
+                "cursor-default text-primary/90 hover:text-primary/80"
+              }`}
+              key={link.label}
+            >
+              {link.label}
+            </Link>
+          ))
+      ) : (
+        <div>Dashboard</div>
+      )}
     </div>
   );
 };

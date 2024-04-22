@@ -51,16 +51,18 @@ const TicketDetail = ({ ticket, users, comments, canAddComment }: Props) => {
           </CardContent>
           <CardFooter>Updated: {formatDate(ticket.updatedAt)}</CardFooter>
         </Card>
-        <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
-          <AssingTicket ticket={ticket} users={users} />
-          <Link
-            href={`/tickets/edit/${ticket.id}`}
-            className={`${buttonVariants({ variant: "default" })}`}
-          >
-            EDIT TICKET
-          </Link>
-          <DeleteButton ticketId={ticket.id} />
-        </div>
+        {canAddComment && (
+          <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
+            <AssingTicket ticket={ticket} users={users} />
+            <Link
+              href={`/tickets/edit/${ticket.id}`}
+              className={`${buttonVariants({ variant: "default" })}`}
+            >
+              EDIT TICKET
+            </Link>
+            <DeleteButton ticketId={ticket.id} />
+          </div>
+        )}
       </div>
 
       {canAddComment && (

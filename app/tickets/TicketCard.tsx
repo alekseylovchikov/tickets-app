@@ -15,9 +15,10 @@ type TicketWithUser = Prisma.TicketGetPayload<{
 
 interface Props {
   ticket: TicketWithUser;
+  canEdit: boolean;
 }
 
-const TicketCard = ({ ticket }: Props) => {
+const TicketCard = ({ ticket, canEdit }: Props) => {
   const isClosed = ticket.status === "CLOSED";
 
   return (
@@ -30,7 +31,9 @@ const TicketCard = ({ ticket }: Props) => {
       <CardHeader>
         <CardTitle>
           <Link
-            className={`text-blue-500 break-word${isClosed ? " text-muted-foreground" : ""}`}
+            className={`text-blue-500 break-word${
+              isClosed ? " text-muted-foreground" : ""
+            }`}
             href={`/tickets/${ticket.id}`}
           >
             {ticket.title}
@@ -41,7 +44,7 @@ const TicketCard = ({ ticket }: Props) => {
       <CardContent className="flex flex-col gap-2 items-start justify-between">
         <TicketStatusBadge status={ticket.status} />
 
-        <div className="flex justify-start ">
+        <div className="flex justify-start">
           <TicketPriorityBadge priority={ticket.priority} />
         </div>
 
@@ -55,7 +58,7 @@ const TicketCard = ({ ticket }: Props) => {
           <small>Created at: {formatDate(ticket.createdAt)}</small>
         </AssignedInfo>
 
-        {!isClosed && <ToFocusButton ticket={ticket} />}
+        {!isClosed && canEdit && <ToFocusButton ticket={ticket} />}
       </CardContent>
     </Card>
   );

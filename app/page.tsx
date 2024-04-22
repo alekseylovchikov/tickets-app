@@ -67,13 +67,13 @@ const Dashboard = async () => {
     <div>
       <div className="grid gap-4 md:grid-cols-2 px-2">
         <div>
+          <DashRicentTickets title="Focused" tickets={focusedTickets} />
+        </div>
+        <div>
           <DashRicentTickets title="Recently Updated" tickets={tickets} />
         </div>
         <div>
           <DashRicentTickets title="Recently Closed" tickets={closedTickets} />
-        </div>
-        <div>
-          <DashRicentTickets title="Focused" tickets={focusedTickets} />
         </div>
         <div>
           <DashChart data={data} />

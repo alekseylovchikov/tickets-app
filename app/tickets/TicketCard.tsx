@@ -25,7 +25,7 @@ const TicketCard = ({ ticket, canEdit }: Props) => {
     <Card
       key={ticket.id}
       className={`flex flex-col justify-between${
-        ticket.focus ? " bg-indigo-900" : ""
+        ticket.focus ? " focused" : ""
       }`}
     >
       <CardHeader>

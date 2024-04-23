@@ -58,7 +58,7 @@ const TicketDetail = ({ ticket, users, comments, canAddComment }: Props) => {
               href={`/tickets/edit/${ticket.id}`}
               className={`${buttonVariants({ variant: "default" })}`}
             >
-              EDIT TICKET
+              EDIT
             </Link>
             <DeleteButton ticketId={ticket.id} />
           </div>

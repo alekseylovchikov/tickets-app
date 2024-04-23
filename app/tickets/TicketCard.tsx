@@ -16,9 +16,10 @@ type TicketWithUser = Prisma.TicketGetPayload<{
 interface Props {
   ticket: TicketWithUser;
   canEdit: boolean;
+  isCollapsed?: boolean;
 }
 
-const TicketCard = ({ ticket, canEdit }: Props) => {
+const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
   const isClosed = ticket.status === "CLOSED";
 
   return (
@@ -41,25 +42,27 @@ const TicketCard = ({ ticket, canEdit }: Props) => {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-2 items-start justify-between">
-        <TicketStatusBadge status={ticket.status} />
+      {!isCollapsed && (
+        <CardContent className="flex flex-col gap-2 items-start justify-between">
+          <TicketStatusBadge status={ticket.status} />
 
-        <div className="flex justify-start">
-          <TicketPriorityBadge priority={ticket.priority} />
-        </div>
+          <div className="flex justify-start">
+            <TicketPriorityBadge priority={ticket.priority} />
+          </div>
 
-        {ticket.assignedToUser?.name && (
+          {ticket.assignedToUser?.name && (
+            <AssignedInfo focus={ticket.focus}>
+              <small>Assigned to: {ticket.assignedToUser.name}</small>
+            </AssignedInfo>
+          )}
+
           <AssignedInfo focus={ticket.focus}>
-            <small>Assigned to: {ticket.assignedToUser.name}</small>
+            <small>Created at: {formatDate(ticket.createdAt)}</small>
           </AssignedInfo>
-        )}
 
-        <AssignedInfo focus={ticket.focus}>
-          <small>Created at: {formatDate(ticket.createdAt)}</small>
-        </AssignedInfo>
-
-        {!isClosed && canEdit && <ToFocusButton ticket={ticket} />}
-      </CardContent>
+          {!isClosed && canEdit && <ToFocusButton ticket={ticket} />}
+        </CardContent>
+      )}
     </Card>
   );
 };

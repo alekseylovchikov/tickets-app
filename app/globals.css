@@ -58,6 +58,25 @@
   }
 }
 
+@layer components {
+  .success-btn {
+    @apply bg-green-600 text-primary-foreground hover:opacity-5;
+  }
+
+  .danger-btn {
+    @apply bg-red-500 text-primary-foreground hover:opacity-5;
+  }
+
+  .warning-btn {
+    @apply bg-orange-400 text-primary-foreground hover:opacity-5;
+  }
+}
+
 .focused {
   background-color: #222a34;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.focused:hover {
+  opacity: 0.9;
 }

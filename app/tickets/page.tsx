@@ -3,10 +3,10 @@ import StatusFilter from "@/components/StatusFilter";
 import { buttonVariants } from "@/components/ui/button";
 import prisma from "@/prisma/db";
 import { Status, Ticket } from "@prisma/client";
-import Link from "next/link";
-import TicketCard from "./TicketCard";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import options from "../api/auth/[...nextauth]/options";
+import TicketCardContainer from "./TicketCardContainer";
 
 export interface SearchParams {
   page: string;
@@ -62,15 +62,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
         <StatusFilter />
       </div>
 
-      <div className="grid gap-2 my-2 md:grid-cols-3 lg:grid-cols-4">
-        {tickets?.map((ticket) => (
-          <TicketCard
-            key={ticket.id}
-            ticket={ticket}
-            canEdit={Boolean(session?.user)}
-          />
-        ))}
-      </div>
+      <TicketCardContainer canEdit={Boolean(session?.user)} tickets={tickets} />
 
       <Pagination
         itemCount={ticketsCount}

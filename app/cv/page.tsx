@@ -50,7 +50,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
 
   return (
     <div className="p-4">
-      <TicketCardContainer canEdit={Boolean(session?.user)} tickets={tickets} />
+      <TicketCardContainer tickets={tickets} />
 
       <Pagination
         itemCount={ticketsCount}

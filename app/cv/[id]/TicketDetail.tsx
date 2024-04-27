@@ -1,14 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { formatDate } from "@/utils/formatDate";
 import { Ticket } from "@prisma/client";
 import Link from "next/link";

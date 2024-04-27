@@ -17,9 +17,7 @@ export interface SearchParams {
 const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
   const session = await getServerSession(options);
 
-  if (!session) {
-    return <p className="text-destructive">Unauthorized</p>;
-  }
+  if (!session) return <p className="text-destructive">Unauthorized</p>;
 
   const pageSize = 10;
   const page = Number(searchParams.page) || 1;

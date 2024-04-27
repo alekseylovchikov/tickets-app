@@ -1,27 +1,21 @@
-import TicketPriorityBadge from "@/components/TicketPriorityBadge";
-import TicketStatusBadge from "@/components/TicketStatusBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Prisma } from "@prisma/client";
-import Link from "next/link";
-import ToFocusButton from "./ToFocusButton";
-import AssignedInfo from "./AssignedInfo";
 import { formatDate } from "@/utils/formatDate";
+import type { Ticket } from "@prisma/client";
+import Link from "next/link";
+import AssignedInfo from "./AssignedInfo";
 
-type TicketWithUser = Prisma.TicketGetPayload<{
-  include: {
-    assignedToUser: true;
-  };
-}>;
+// type TicketWithUser = Prisma.TicketGetPayload<{
+//   include: {
+//     assignedToUser: true;
+//   };
+// }>;
 
 interface Props {
-  ticket: TicketWithUser;
-  canEdit: boolean;
+  ticket: Ticket;
   isCollapsed?: boolean;
 }
 
-const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
-  const isClosed = ticket.status === "CLOSED";
-
+const TicketCard = ({ isCollapsed, ticket }: Props) => {
   return (
     <Card
       key={ticket.id}
@@ -32,29 +26,13 @@ const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
       <CardHeader>
         <CardTitle>
           <Link
-            className={`text-blue-500 break-word${
-              isClosed ? " text-muted-foreground" : ""
-            }`}
+            className="text-blue-500 break-word text-center"
             href={`/cv/${ticket.id}`}
           >
             {ticket.title}
           </Link>
         </CardTitle>
       </CardHeader>
-
-      {!isCollapsed && (
-        <CardContent className="flex flex-col gap-2 items-start justify-between">
-          {ticket.assignedToUser?.name && (
-            <AssignedInfo focus={ticket.focus}>
-              <small>Assigned to: {ticket.assignedToUser.name}</small>
-            </AssignedInfo>
-          )}
-
-          <AssignedInfo focus={ticket.focus}>
-            <small>Created at: {formatDate(ticket.createdAt)}</small>
-          </AssignedInfo>
-        </CardContent>
-      )}
     </Card>
   );
 };

@@ -1,30 +1,13 @@
 "use client";
 
-import { Prisma } from "@prisma/client";
+import { Ticket } from "@prisma/client";
 import TicketCard from "./TicketCard";
 
-type TicketWithUser = Prisma.TicketGetPayload<{
-  include: {
-    assignedToUser: true;
-  };
-}>;
-
-const TicketCardContainer = ({
-  tickets,
-  canEdit,
-}: {
-  canEdit: boolean;
-  tickets: TicketWithUser[];
-}) => {
+const TicketCardContainer = ({ tickets }: { tickets: Ticket[] }) => {
   return (
-    <div className="grid gap-2 my-2 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex m-2">
       {tickets?.map((ticket) => (
-        <TicketCard
-          key={ticket.id}
-          ticket={ticket}
-          canEdit={canEdit}
-          isCollapsed={false}
-        />
+        <TicketCard key={ticket.id} ticket={ticket} isCollapsed={false} />
       ))}
     </div>
   );

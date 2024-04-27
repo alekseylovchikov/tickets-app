@@ -1,6 +1,23 @@
-import GoToButton from "./GoToButton";
+import prisma from "@/prisma/db";
+
+import TicketDetail from "./cv/[id]/TicketDetail";
 
 const Dashboard = async () => {
+  const resumes = await prisma.ticket.findMany({
+    // where,
+    // take: pageSize,
+    // skip: (page - 1) * pageSize,
+    orderBy: [{ createdAt: "desc" }],
+  });
+
+  if (resumes.length === 0) {
+    return (
+      <div>
+        <p className="text-center">No CV found</p>
+      </div>
+    );
+  }
+
   // const session = await getServerSession(options);
   // const tickets = await prisma.ticket.findMany({
   //   where: {
@@ -59,8 +76,10 @@ const Dashboard = async () => {
   // });
 
   return (
-    <div className="flex items-center justify-center">
-      <GoToButton navigateTo="/cv/new">CREATE CV</GoToButton>
+    <div>
+      {/* <GoToButton navigateTo="/cv/new">CREATE CV</GoToButton> */}
+      {/* TicketDetail */}
+      <TicketDetail ticket={resumes[0]} canEditOrDelete={false} />
       {/* <h1 className="text-3xl font-bold">Dashboard</h1>
       <div className="grid gap-4 md:grid-cols-2 px-2">
         <div>

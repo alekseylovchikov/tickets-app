@@ -11,11 +11,7 @@ const MainNav = async () => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex items-center gap-2">
-        <span className="text-primary font-bold">CV</span>
-      </div>
-
-      {hasSession && <MainNavLinks />}
+      <MainNavLinks hasAccess={hasSession} />
 
       <div className="flex items-center gap-2">
         {hasSession ? (

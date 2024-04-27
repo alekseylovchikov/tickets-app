@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const MainNavLinks = () => {
+const MainNavLinks = ({ hasAccess }: { hasAccess: boolean }) => {
   const links = [
     { label: "DASHBOARD", href: "/" },
     { label: "CV", href: "/cv" },
@@ -12,18 +12,20 @@ const MainNavLinks = () => {
 
   return (
     <div className="flex items-center gap-2">
-      {links.map((link) => (
-        <Link
-          href={link.href}
-          className={`navbar-link uppercase font-bold ${
-            currentPath == link.href &&
-            "cursor-default text-blue-500 hover:text-primary/80 underline"
-          }`}
-          key={link.label}
-        >
-          {link.label}
-        </Link>
-      ))}
+      <span className="underline uppercase font-bold">aleksey lovchikov</span>
+      {hasAccess &&
+        links.map((link) => (
+          <Link
+            href={link.href}
+            className={`navbar-link uppercase font-bold ${
+              currentPath == link.href &&
+              "cursor-default text-primary hover:text-primary/80"
+            }`}
+            key={link.label}
+          >
+            {link.label}
+          </Link>
+        ))}
     </div>
   );
 };

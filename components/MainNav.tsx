@@ -7,16 +7,28 @@ import options from "@/app/api/auth/[...nextauth]/options";
 
 const MainNav = async () => {
   const session = await getServerSession(options);
+  const hasSession = Boolean(session?.user);
 
   return (
     <div className="flex justify-between">
-      <MainNavLinks role={session?.user.role} />
+      <div className="flex items-center gap-2">
+        <span className="text-primary font-bold">CV</span>
+      </div>
+
+      {hasSession && <MainNavLinks />}
 
       <div className="flex items-center gap-2">
-        {session ? (
-          <Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
+        {hasSession ? (
+          <Link
+            className="uppercase font-bold"
+            href="/api/auth/signout?callbackUrl=/"
+          >
+            Logout
+          </Link>
         ) : (
-          <Link href="/api/auth/signin">Login</Link>
+          <Link className="uppercase font-bold" href="/api/auth/signin">
+            Login
+          </Link>
         )}
         <ToggleMode />
       </div>

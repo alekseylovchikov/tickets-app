@@ -15,27 +15,13 @@ const ViewTicket = async ({ params }: Props) => {
       id: Number(params.id),
     },
   });
-
-  const users = await prisma.user.findMany();
-  const comments = await prisma.comment.findMany({
-    where: {
-      ticketId: Number(params.id),
-    },
-    orderBy: [{ createdAt: "desc" }],
-  });
+  const canEditOrDelete = Boolean(session?.user);
 
   if (!ticket) {
-    return <p className="text-destructive">Ticket not found</p>;
+    return <p className="text-destructive">CV not found</p>;
   }
 
-  return (
-    <TicketDetail
-      ticket={ticket}
-      users={users}
-      comments={comments}
-      canAddComment={Boolean(session?.user)}
-    />
-  );
+  return <TicketDetail ticket={ticket} canEditOrDelete={canEditOrDelete} />;
 };
 
 export default ViewTicket;

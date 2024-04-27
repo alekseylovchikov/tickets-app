@@ -52,16 +52,6 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between gap-2">
-        <Link
-          href="/tickets/new"
-          className={buttonVariants({ variant: "default" })}
-        >
-          NEW TICKET
-        </Link>
-        <StatusFilter />
-      </div>
-
       <TicketCardContainer canEdit={Boolean(session?.user)} tickets={tickets} />
 
       <Pagination

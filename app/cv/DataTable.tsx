@@ -83,7 +83,7 @@ const DataTable = ({ tickets, searchParams }: Props) => {
               <TableRow key={ticket.id} data-href="/">
                 <TableCell>
                   <Link
-                    href={`/tickets/${ticket.id}`}
+                    href={`/cv/${ticket.id}`}
                     className="text-blue-500 hover:underline"
                   >
                     {ticket.title}

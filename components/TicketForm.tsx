@@ -48,7 +48,7 @@ const TicketForm = ({ ticket }: Props) => {
       }
 
       setIsSubmitting(false);
-      router.push("/tickets");
+      router.push("/cv");
       router.refresh();
     } catch (error) {
       setError("Something went wrong. Please try again later.");
@@ -69,9 +69,9 @@ const TicketForm = ({ ticket }: Props) => {
             defaultValue={ticket?.title}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Ticket title</FormLabel>
+                <FormLabel>CV title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ticket title..." {...field} />
+                  <Input placeholder="Title..." {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -81,74 +81,15 @@ const TicketForm = ({ ticket }: Props) => {
             defaultValue={ticket?.description}
             control={form.control}
             render={({ field }) => (
-              <SimpleMdeReact placeholder="Description" {...field} />
+              <SimpleMdeReact placeholder="Place your CV here" {...field} />
             )}
           />
-          <div className="flex w-full space-x-4">
-            <FormField
-              control={form.control}
-              name="status"
-              defaultValue={ticket?.status}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder="Status..."
-                          defaultValue={ticket?.status}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="OPEN">Open</SelectItem>
-                      <SelectItem value="STARTED">Started</SelectItem>
-                      <SelectItem value="CLOSED">Closed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="priority"
-              defaultValue={ticket?.priority}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Priority</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder="Priority..."
-                          defaultValue={ticket?.priority}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="LOW">Low</SelectItem>
-                      <SelectItem value="MEDIUM">Medium</SelectItem>
-                      <SelectItem value="HIGH">High</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-          </div>
           <Button disabled={isSubmitting} type="submit">
-            {ticket ? "UPDATE TICKET" : "CREATE TICKET"}
+            {ticket ? "UPDATE CV" : "CREATE CV"}
           </Button>
         </form>
       </Form>
-      <p className="text-destructive">{error}</p>
+      <p className="tomato">{error}</p>
     </div>
   );
 };

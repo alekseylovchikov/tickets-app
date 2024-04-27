@@ -34,7 +34,7 @@ function DashRicentTickets({ tickets, title }: Props) {
             <div key={ticket.id} className="flex items-center">
               <TicketStatusBadge status={ticket.status} />
               <div className="ml-4 space-y-1">
-                <Link href={`/tickets/${ticket.id}`}>
+                <Link href={`/cv/${ticket.id}`}>
                   <p>{ticket.title}</p>
                   <p>{ticket.assignedToUser?.name || "Unassigned"}</p>
                 </Link>

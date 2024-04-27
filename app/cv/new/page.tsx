@@ -6,14 +6,18 @@ const TicketForm = dynamic(() => import("@/components/TicketForm"), {
   ssr: false,
 });
 
-const NewTicket = async () => {
+const NewCV = async () => {
   const session = await getServerSession(options);
 
   if (!session) {
-    return <p className="text-destructive">Unauthorized</p>;
+    return (
+      <p className="uppercase text-center font-bold text-2xl">
+        For creating a new CV please login
+      </p>
+    );
   }
 
   return <TicketForm />;
 };
 
-export default NewTicket;
+export default NewCV;

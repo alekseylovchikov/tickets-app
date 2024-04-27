@@ -1,5 +1,5 @@
 import prisma from "@/prisma/db";
-import TicketCard from "../tickets/TicketCard";
+import TicketCard from "../cv/TicketCard";
 import { getServerSession } from "next-auth";
 import options from "../api/auth/[...nextauth]/options";
 

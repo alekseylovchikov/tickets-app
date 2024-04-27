@@ -31,7 +31,7 @@ const StatusFilter = () => {
         if (status) params.append("status", status);
 
         const query = params.size ? `?${params.toString()}` : "";
-        router.push(`/tickets${query}`);
+        router.push(`/cv${query}`);
       }}
     >
       <SelectTrigger className="w-[200px]">

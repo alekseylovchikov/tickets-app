@@ -27,7 +27,7 @@ const DeleteButton = ({ ticketId }: { ticketId: number }) => {
       await axios.delete(`/api/tickets/${ticketId}`);
 
       setIsDeleting(false);
-      router.push("/tickets");
+      router.push("/cv");
       router.refresh();
     } catch (error) {
       setIsDeleting(false);
@@ -49,7 +49,7 @@ const DeleteButton = ({ ticketId }: { ticketId: number }) => {
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your
-              ticket.
+              cv.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

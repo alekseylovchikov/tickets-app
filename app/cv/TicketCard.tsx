@@ -35,7 +35,7 @@ const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
             className={`text-blue-500 break-word${
               isClosed ? " text-muted-foreground" : ""
             }`}
-            href={`/tickets/${ticket.id}`}
+            href={`/cv/${ticket.id}`}
           >
             {ticket.title}
           </Link>
@@ -44,12 +44,6 @@ const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
 
       {!isCollapsed && (
         <CardContent className="flex flex-col gap-2 items-start justify-between">
-          <TicketStatusBadge status={ticket.status} />
-
-          <div className="flex justify-start">
-            <TicketPriorityBadge priority={ticket.priority} />
-          </div>
-
           {ticket.assignedToUser?.name && (
             <AssignedInfo focus={ticket.focus}>
               <small>Assigned to: {ticket.assignedToUser.name}</small>
@@ -59,8 +53,6 @@ const TicketCard = ({ isCollapsed, ticket, canEdit }: Props) => {
           <AssignedInfo focus={ticket.focus}>
             <small>Created at: {formatDate(ticket.createdAt)}</small>
           </AssignedInfo>
-
-          {!isClosed && canEdit && <ToFocusButton ticket={ticket} />}
         </CardContent>
       )}
     </Card>
